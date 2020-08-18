@@ -14,7 +14,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 const ALIAS_SYMBOL = '@';
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.bundle.js'
@@ -22,25 +22,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-          presets: [
-            [
-              '@babel/preset-env',
-              { modules: 'commonjs' }
+            presets: [
+              [
+                '@babel/preset-env',
+                { modules: 'commonjs' }
+              ],
+              '@babel/preset-react',
+              '@babel/preset-typescript'
             ],
-            '@babel/preset-react'
-          ],
-          plugins: [
-            '@babel/plugin-proposal-class-properties',
-            '@babel/plugin-proposal-object-rest-spread',
-            '@babel/plugin-syntax-dynamic-import',
-            '@babel/plugin-transform-runtime'
-          ]
-        }
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-proposal-object-rest-spread',
+              '@babel/plugin-syntax-dynamic-import',
+              '@babel/plugin-transform-runtime'
+            ]
+          }
         }
       },
       {
@@ -77,6 +78,7 @@ module.exports = {
   resolve: {
     alias: {
       [ALIAS_SYMBOL]: path.resolve(__dirname, './src')
-    }
+    },
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   }
 };
